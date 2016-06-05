@@ -1,0 +1,91 @@
+﻿@model Email.DiscoPlugin.Models.ConfigurationModel
+
+<div class="clearfix" style="width: 750px; margin: 0 auto 0 auto;">
+    <div class="form" style="float: left">
+        <h2>
+            Email Server Configuration Details
+        </h2>
+        <table>
+            <tr>
+                <th>
+                    SMTP Mail Server Address:
+                </th>
+                <td>
+                    @Html.EditorFor(m => m.SmtpServerAddress)<br/>
+                    @Html.ValidationMessageFor(m => m.SmtpServerAddress)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    SMTP Sender Address:
+                </th>
+                <td>
+                    @Html.EditorFor(m => m.SmtpSenderAddress)<br/>
+                    @Html.ValidationMessageFor(m => m.SmtpSenderAddress)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    Authentication Required:
+                </th>
+                <td>
+                    @Html.CheckBoxFor(m => m.AuthenticationRequried)<br />
+                    @Html.ValidationMessageFor(m => m.AuthenticationRequried)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    SMTP Username:
+                </th>
+                <td>
+                    @Html.EditorFor(m => m.SmtpUsername)<br />
+                    @Html.ValidationMessageFor(m => m.SmtpUsername)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    SMTP Password:
+                </th>
+                <td>
+                    @Html.EditorFor(m => m.SmtpPassword)<br />
+                    @Html.ValidationMessageFor(m => m.SmtpPassword)
+                </td>
+            </tr>
+        </table>
+        <hr />
+        <h2>
+            Email Alert Configuration
+        </h2>
+        <table>
+            <tr>
+                <th>
+                    Send emails when device is ready for collection:
+                </th>
+                <td>
+                    @Html.CheckBoxFor(m => m.DeviceReadyAlert)
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<script>
+    $(document).ready(function ()
+    {
+        $('<a>').attr('href', '@Plugin.ActionUrl("TestEmailConfiguration")').addClass('button').text('Send Test Email').prependTo('.actionBar');
+
+        if ($('#AuthenticationRequried').not(':checked'))
+        {
+            $('#SmtpUsername').val("");
+            $('#SmtpPassword').val("");
+            $('#SmtpUsername').prop("disabled", !$(this).is(':checked'));
+            $('#SmtpPassword').prop("disabled", !$(this).is(':checked'));
+        }
+    });
+
+    $('#AuthenticationRequried').change(function() {
+        $('#SmtpUsername').val("");
+        $('#SmtpPassword').val("");
+        $('#SmtpUsername').prop("disabled", !$(this).is(':checked'));
+        $('#SmtpPassword').prop("disabled", !$(this).is(':checked'));
+    });
+</script>
