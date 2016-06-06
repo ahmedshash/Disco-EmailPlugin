@@ -16,12 +16,11 @@ namespace Email.DiscoPlugin.Internal
                 var emailConfig = new ConfigurationStore(context).DeserializeConfiguration();
                 var user = UserService.GetUser(job.UserId);
 
-                //Send email if alert is enabled
+                //Send email if alert is enabled and user has an email address
                 if (!emailConfig.DeviceReadyAlert) return;
-
+                if (user.EmailAddress == null) return;
                 using (var email = new MailMessage())
                 {
-                    if (user.EmailAddress == null) return;
                     using (var smtp = new SmtpClient(emailConfig.SmtpServerAddress))
                     {
                         if (emailConfig.AuthenticationRequried)
@@ -56,7 +55,7 @@ namespace Email.DiscoPlugin.Internal
                         email.To.Add(new MailAddress(user.EmailAddress));
                         email.From = new MailAddress($"{emailConfig.SmtpSenderAddress}", $"Disco ICT - {context.DiscoConfiguration.OrganisationName}");
                         email.Subject = "Test Email";
-                        email.Body = $"This is a test email to ensure that the email plugin has been successfully configured";
+                        email.Body = "This is a test email to ensure that the email plugin has been successfully configured";
                         smtp.Send(email);
                     }
                 }

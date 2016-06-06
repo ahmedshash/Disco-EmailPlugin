@@ -14,7 +14,7 @@ namespace Email.DiscoPlugin.Features
     [PluginFeature(Id = "Email", Name = "Email", PrimaryFeature = true)]
     public class EmailFeature : InteroperabilityProviderFeature
     {
-        public override void Initialize(DiscoDataContext Database)
+        public override void Initialize(DiscoDataContext database)
         {
             RepositoryMonitor.StreamAfterCommit
                 .Where(e =>
@@ -26,25 +26,31 @@ namespace Email.DiscoPlugin.Features
         public void DeviceReadyForReturn(RepositoryMonitorEvent e)
         {
             var job = (Job)e.Entity;
-            if (!job.DeviceReadyForReturn.HasValue) return;
-
             var emailConfig = new ConfigurationStore(e.Database).DeserializeConfiguration();
-
-            if (!emailConfig.DeviceReadyAlert) return;
-
-            //Send Collection Email
-            Internal.Email.SendCollectionEmail(job, e.Database.DiscoConfiguration.OrganisationName);
             var user = UserService.GetUser(job.UserId);
 
-            //Insert note into job log
-            e.Database.JobLogs.Add(new JobLog
+            if (!job.DeviceReadyForReturn.HasValue) return;
+            if (!emailConfig.DeviceReadyAlert) return;
+            if (user.EmailAddress == null) return;
+
+            //Send Collection Email
+            try
             {
-                Job = job,
-                Comments = $"# Collection Email Sent.\r\n Collection email sent to {user.DisplayName}",
-                TechUser = e.Database.Users.Find(UserService.CurrentUserId),
-                Timestamp = DateTime.Now
-            });
-            e.Database.SaveChanges();
+                Internal.Email.SendCollectionEmail(job, e.Database.DiscoConfiguration.OrganisationName);
+                //Insert note into job log if email has been sent successfully
+                e.Database.JobLogs.Add(new JobLog
+                {
+                    Job = job,
+                    Comments = $"# Collection Email Sent.\r\n Collection email sent to {user.DisplayName}",
+                    TechUser = e.Database.Users.Find(UserService.CurrentUserId),
+                    Timestamp = DateTime.Now
+                });
+                e.Database.SaveChanges();
+            }
+            catch (Exception message)
+            {
+                throw new Exception(message.ToString());
+            }
         }
     }
 }

@@ -10,8 +10,7 @@ namespace Email.DiscoPlugin.Internal
         public static void UninstallData(DiscoDataContext database, PluginManifest manifest, ScheduledTaskStatus status)
         {
             status.UpdateStatus("Removing Plugin Configuration");
-            var config = new ConfigurationStore(database);
-            config.EmailConfiguration = null;
+            new ConfigurationStore(database) { EmailConfiguration = null };
             database.SaveChanges();
         }
     }

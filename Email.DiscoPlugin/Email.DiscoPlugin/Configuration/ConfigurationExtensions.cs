@@ -11,7 +11,7 @@ namespace Email.DiscoPlugin.Configuration
         {
             if (configStore.EmailConfiguration == null)
             {
-                return new ConfigurationModel()
+                return new ConfigurationModel
                 {
                     AuthenticationRequried = false,
                     DeviceReadyAlert = false,
@@ -22,7 +22,7 @@ namespace Email.DiscoPlugin.Configuration
                 };
             }
             var deserializedConfig = JsonConvert.DeserializeObject<ConfigurationModel>(configStore.EmailConfiguration);
-            return new ConfigurationModel()
+            return new ConfigurationModel
             {
                 SmtpServerAddress = deserializedConfig.SmtpServerAddress,
                 AuthenticationRequried = deserializedConfig.AuthenticationRequried,
