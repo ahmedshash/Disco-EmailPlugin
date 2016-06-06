@@ -36,7 +36,7 @@ namespace Email.DiscoPlugin.Features
             //Send Collection Email
             try
             {
-                Internal.Email.SendCollectionEmail(job, e.Database.DiscoConfiguration.OrganisationName);
+                Internal.Email.SendCollectionEmail(job);
                 //Insert note into job log if email has been sent successfully
                 e.Database.JobLogs.Add(new JobLog
                 {

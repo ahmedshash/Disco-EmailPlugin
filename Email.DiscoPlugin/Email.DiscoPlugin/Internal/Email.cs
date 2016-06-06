@@ -9,7 +9,7 @@ namespace Email.DiscoPlugin.Internal
 {
     public static class Email
     {
-        public static void SendCollectionEmail(this Job job, string organisationName)
+        public static void SendCollectionEmail(this Job job)
         {
             using (var context = new DiscoDataContext())
             {
@@ -27,7 +27,7 @@ namespace Email.DiscoPlugin.Internal
                             smtp.Credentials = new NetworkCredential(emailConfig.SmtpUsername, emailConfig.SmtpPassword);
                         //Message
                         email.To.Add(new MailAddress(user.EmailAddress));
-                        email.From = new MailAddress($"{emailConfig.SmtpSenderAddress}", $"Disco ICT - {organisationName}");
+                        email.From = new MailAddress($"{emailConfig.SmtpSenderAddress}", $"Disco ICT - {context.DiscoConfiguration.OrganisationName}");
                         email.Subject = "Your device is ready for collection";
                         email.Body = $"Dear {user.GivenName} <br /><br /> Your device is ready for collection from the I.T Office.";
                         email.IsBodyHtml = true;
