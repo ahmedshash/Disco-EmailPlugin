@@ -23,9 +23,11 @@ namespace Email.DiscoPlugin.Internal
                 {
                     using (var smtp = new SmtpClient(emailConfig.SmtpServerAddress))
                     {
+                        if (emailConfig.SmtpServerPort != null) smtp.Port = emailConfig.SmtpServerPort.Value;
+                        smtp.EnableSsl = emailConfig.EnableSsl;
                         if (emailConfig.AuthenticationRequried)
                             smtp.Credentials = new NetworkCredential(emailConfig.SmtpUsername, emailConfig.SmtpPassword);
-                        //Message
+                        //Collection Message
                         email.To.Add(new MailAddress(user.EmailAddress));
                         email.From = new MailAddress($"{emailConfig.SmtpSenderAddress}", $"Disco ICT - {context.DiscoConfiguration.OrganisationName}");
                         email.Subject = "Your device is ready for collection";
@@ -44,14 +46,17 @@ namespace Email.DiscoPlugin.Internal
                 var emailConfig = new ConfigurationStore(context).DeserializeConfiguration();
                 var user = UserService.CurrentUser;
 
+                if (user.EmailAddress == null) return;
+
                 using (var email = new MailMessage())
                 {
-                    if (user.EmailAddress == null) return;
                     using (var smtp = new SmtpClient(emailConfig.SmtpServerAddress))
                     {
+                        if (emailConfig.SmtpServerPort != null) smtp.Port = emailConfig.SmtpServerPort.Value;
+                        smtp.EnableSsl = emailConfig.EnableSsl;
                         if (emailConfig.AuthenticationRequried)
                             smtp.Credentials = new NetworkCredential(emailConfig.SmtpUsername, emailConfig.SmtpPassword);
-                        //Message
+                        //Test Message
                         email.To.Add(new MailAddress(user.EmailAddress));
                         email.From = new MailAddress($"{emailConfig.SmtpSenderAddress}", $"Disco ICT - {context.DiscoConfiguration.OrganisationName}");
                         email.Subject = "Test Email";

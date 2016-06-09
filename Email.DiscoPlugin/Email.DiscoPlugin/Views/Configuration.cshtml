@@ -3,16 +3,34 @@
 <div class="clearfix" style="width: 750px; margin: 0 auto 0 auto;">
     <div class="form" style="float: left">
         <h2>
-            Email Server Configuration Details
+            Email Server Configuration
         </h2>
         <table>
             <tr>
                 <th>
-                    SMTP Mail Server Address:
+                    SMTP Server Address:
                 </th>
                 <td>
                     @Html.EditorFor(m => m.SmtpServerAddress)<br/>
                     @Html.ValidationMessageFor(m => m.SmtpServerAddress)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    SMTP Server Port:
+                </th>
+                <td>
+                    @Html.EditorFor(m => m.SmtpServerPort)<br/>
+                    <span>Default is 25</span>
+                    @Html.ValidationMessageFor(m => m.SmtpServerPort)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    Enable SSL:
+                </th>
+                <td>
+                    @Html.CheckBoxFor(m => m.EnableSsl)
                 </td>
             </tr>
             <tr>
@@ -29,8 +47,7 @@
                     Authentication Required:
                 </th>
                 <td>
-                    @Html.CheckBoxFor(m => m.AuthenticationRequried)<br />
-                    @Html.ValidationMessageFor(m => m.AuthenticationRequried)
+                    @Html.CheckBoxFor(m => m.AuthenticationRequried)
                 </td>
             </tr>
             <tr>

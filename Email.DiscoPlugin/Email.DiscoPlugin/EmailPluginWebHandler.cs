@@ -1,4 +1,5 @@
 ﻿using Disco.Services.Plugins;
+using System;
 using System.Web.Mvc;
 
 namespace Email.DiscoPlugin
@@ -7,8 +8,16 @@ namespace Email.DiscoPlugin
     {
         public ActionResult TestEmailConfiguration()
         {
-            Internal.Email.SendTestEmail();
-            return RedirectToPluginConfiguration();
+            try
+            {
+                Internal.Email.SendTestEmail();
+                return RedirectToPluginConfiguration();
+            }
+            catch (Exception message)
+            {
+                throw new Exception(message.ToString());
+            }
+
         }
     }
 }

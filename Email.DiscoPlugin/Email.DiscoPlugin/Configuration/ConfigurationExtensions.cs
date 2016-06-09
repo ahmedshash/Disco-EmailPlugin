@@ -1,7 +1,7 @@
 ﻿using Disco.Services.Plugins;
 using Email.DiscoPlugin.Models;
-using Newtonsoft.Json;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 
 namespace Email.DiscoPlugin.Configuration
 {
@@ -9,27 +9,35 @@ namespace Email.DiscoPlugin.Configuration
     {
         public static ConfigurationModel DeserializeConfiguration(this ConfigurationStore configStore)
         {
+            var serializer = new JavaScriptSerializer();
+
             if (configStore.EmailConfiguration == null)
             {
                 return new ConfigurationModel
                 {
-                    AuthenticationRequried = false,
-                    DeviceReadyAlert = false,
                     SmtpServerAddress = "",
-                    SmtpPassword = "",
+                    SmtpServerPort = null,
+                    EnableSsl = false,
                     SmtpSenderAddress = "",
-                    SmtpUsername = ""
+                    AuthenticationRequried = false,
+                    SmtpUsername = "",
+                    SmtpPassword = "",
+                    DeviceReadyAlert = false
                 };
             }
-            var deserializedConfig = JsonConvert.DeserializeObject<ConfigurationModel>(configStore.EmailConfiguration);
+
+            var deserializedConfig = serializer.Deserialize<ConfigurationModel>(configStore.EmailConfiguration);
+
             return new ConfigurationModel
             {
                 SmtpServerAddress = deserializedConfig.SmtpServerAddress,
+                SmtpServerPort = deserializedConfig.SmtpServerPort,
+                EnableSsl = deserializedConfig.EnableSsl,
+                SmtpSenderAddress = deserializedConfig.SmtpSenderAddress,
                 AuthenticationRequried = deserializedConfig.AuthenticationRequried,
-                DeviceReadyAlert = deserializedConfig.DeviceReadyAlert,
-                SmtpPassword = deserializedConfig.SmtpPassword,
                 SmtpUsername = deserializedConfig.SmtpUsername,
-                SmtpSenderAddress = deserializedConfig.SmtpSenderAddress
+                SmtpPassword = deserializedConfig.SmtpPassword,
+                DeviceReadyAlert = deserializedConfig.DeviceReadyAlert
             };
         }
 
@@ -41,7 +49,8 @@ namespace Email.DiscoPlugin.Configuration
 
         public static void UpdateStore(this ConfigurationModel model, ConfigurationStore configStore)
         {
-            var serializedConfig = JsonConvert.SerializeObject(model);
+            var serializer = new JavaScriptSerializer();
+            var serializedConfig = serializer.Serialize(model);
             configStore.EmailConfiguration = serializedConfig;
         }
     }
