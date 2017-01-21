@@ -1,5 +1,6 @@
 ﻿using Disco.Data.Repository;
 using Disco.Services.Plugins;
+using Disco.Services.Users;
 using System.Web.Mvc;
 
 namespace Email.DiscoPlugin.Configuration
@@ -21,6 +22,7 @@ namespace Email.DiscoPlugin.Configuration
 
             if (model == null) return false;
             model.UpdateStore(store);
+            Internal.Email.SendEmailMessage(UserService.CurrentUser);
             return true;
         }
     }

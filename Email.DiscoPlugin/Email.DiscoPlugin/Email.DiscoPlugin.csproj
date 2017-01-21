@@ -13,7 +13,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Email.DiscoPlugin</RootNamespace>
     <AssemblyName>Email.DiscoPlugin</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
@@ -22,6 +22,7 @@
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
     <UseGlobalApplicationHostFile />
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -118,7 +119,6 @@
     <Compile Include="Configuration\ConfigurationHandler.cs" />
     <Compile Include="Configuration\ConfigurationStore.cs" />
     <Compile Include="EmailPlugin.cs" />
-    <Compile Include="EmailPluginWebHandler.cs" />
     <Compile Include="Features\EmailFeature.cs" />
     <Compile Include="Internal\Email.cs" />
     <Compile Include="Internal\Helpers.cs" />
@@ -132,12 +132,15 @@
     <None Include="Views\razorgenerator.directives" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="packages.config" />
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Views\Configuration.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>Configuration.generated.cs</LastGenOutput>
     </None>
     <Content Include="Views\Web.config" />
+    <Content Include="Web.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -1,7 +1,9 @@
 ﻿using Disco.Services.Plugins;
 using Email.DiscoPlugin.Models;
+using System.Collections.Generic;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
+
 
 namespace Email.DiscoPlugin.Configuration
 {
@@ -9,27 +11,11 @@ namespace Email.DiscoPlugin.Configuration
     {
         public static ConfigurationModel DeserializeConfiguration(this ConfigurationStore configStore)
         {
-            var serializer = new JavaScriptSerializer();
-
-            if (configStore.EmailConfiguration == null)
-            {
-                return new ConfigurationModel
-                {
-                    SmtpServerAddress = "",
-                    SmtpServerPort = null,
-                    EnableSsl = false,
-                    SmtpSenderAddress = "",
-                    AuthenticationRequried = false,
-                    SmtpUsername = "",
-                    SmtpPassword = "",
-                    DeviceReadyAlert = false
-                };
-            }
-
-            var deserializedConfig = serializer.Deserialize<ConfigurationModel>(configStore.EmailConfiguration);
+            var deserializedConfig = new JavaScriptSerializer().Deserialize<ConfigurationModel>(configStore.EmailConfiguration);
 
             return new ConfigurationModel
             {
+                CurrentVersion = deserializedConfig.CurrentVersion,
                 SmtpServerAddress = deserializedConfig.SmtpServerAddress,
                 SmtpServerPort = deserializedConfig.SmtpServerPort,
                 EnableSsl = deserializedConfig.EnableSsl,
@@ -37,7 +23,7 @@ namespace Email.DiscoPlugin.Configuration
                 AuthenticationRequried = deserializedConfig.AuthenticationRequried,
                 SmtpUsername = deserializedConfig.SmtpUsername,
                 SmtpPassword = deserializedConfig.SmtpPassword,
-                DeviceReadyAlert = deserializedConfig.DeviceReadyAlert
+                MessageConfig = deserializedConfig.MessageConfig
             };
         }
 
@@ -49,9 +35,28 @@ namespace Email.DiscoPlugin.Configuration
 
         public static void UpdateStore(this ConfigurationModel model, ConfigurationStore configStore)
         {
-            var serializer = new JavaScriptSerializer();
-            var serializedConfig = serializer.Serialize(model);
-            configStore.EmailConfiguration = serializedConfig;
+            configStore.EmailConfiguration = new JavaScriptSerializer().Serialize(model);
+        }
+
+        public static List<MessageConfig> CreateDefaultMessages()
+        {
+            return new List<MessageConfig>
+            {
+                new MessageConfig
+                {
+                    EmailBody = "",
+                    EmailSubject = "",
+                    EmailAlertEnabled = false,
+                    EmailMessageType = MessageType.DeviceReadyForCollection
+                },
+                new MessageConfig
+                {
+                    EmailBody = "This is a test email to ensure that the email plugin has been successfully configured",
+                    EmailSubject = "Test Email",
+                    EmailAlertEnabled = true,
+                    EmailMessageType = MessageType.PluginTestEmail
+                }
+            };
         }
     }
 }

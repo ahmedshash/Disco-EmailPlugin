@@ -5,6 +5,7 @@ using Disco.Services.Plugins;
 using Disco.Services.Plugins.Features.InteroperabilityProvider;
 using Disco.Services.Users;
 using Email.DiscoPlugin.Configuration;
+using Email.DiscoPlugin.Models;
 using System;
 using System.Linq;
 using System.Reactive.Linq;
@@ -18,8 +19,8 @@ namespace Email.DiscoPlugin.Features
         {
             RepositoryMonitor.StreamAfterCommit
                 .Where(e =>
-                    e.EntityType == typeof(Job)
-                    && e.ModifiedProperties.Contains("DeviceReadyForReturn"))
+                    e.EntityType == typeof(Job) &&
+                    e.ModifiedProperties.Contains("DeviceReadyForReturn"))
                 .Subscribe(DeviceReadyForReturn);
         }
 
@@ -27,16 +28,15 @@ namespace Email.DiscoPlugin.Features
         {
             var job = (Job)e.Entity;
             var emailConfig = new ConfigurationStore(e.Database).DeserializeConfiguration();
+            var messageConfig = emailConfig.MessageConfig.First(z => z.EmailMessageType == MessageType.DeviceReadyForCollection);
             var user = UserService.GetUser(job.UserId);
 
-            if (!job.DeviceReadyForReturn.HasValue) return;
-            if (!emailConfig.DeviceReadyAlert) return;
-            if (user.EmailAddress == null) return;
+            if (!job.DeviceReadyForReturn.HasValue || !messageConfig.EmailAlertEnabled || user.EmailAddress == null) return;
 
             //Send Collection Email
             try
             {
-                Internal.Email.SendCollectionEmail(job);
+                Internal.Email.SendEmailMessage(user, messageConfig, job);
                 //Insert note into job log if email has been sent successfully
                 e.Database.JobLogs.Add(new JobLog
                 {

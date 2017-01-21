@@ -30,9 +30,15 @@ namespace Email.DiscoPlugin.Views
     using Disco.Services.Plugins;
     using Disco.Services.Web;
     
+    #line 1 "..\..\Views\Configuration.cshtml"
+    using Email.DiscoPlugin.Models;
+    
+    #line default
+    #line hidden
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Configuration.cshtml")]
-    public partial class Configuration : Disco.Services.Plugins.PluginWebViewPage<Email.DiscoPlugin.Models.ConfigurationModel>
+    public partial class Configuration : Disco.Services.Plugins.PluginWebViewPage<ConfigurationModel>
     {
         public Configuration()
         {
@@ -51,14 +57,24 @@ WriteLiteral(" class=\"form\"");
 
 WriteLiteral(" style=\"float: left\"");
 
-WriteLiteral(">\r\n        <h2>\r\n            Email Server Configuration\r\n        </h2>\r\n        <" +
-"table>\r\n            <tr>\r\n                <th>\r\n                    SMTP Server " +
-"Address:\r\n                </th>\r\n                <td>\r\n");
+WriteLiteral(">\r\n        <h2>Email Server Configuration</h2>\r\n        <table>\r\n            <tr>" +
+"\r\n                <th>\r\n");
 
 WriteLiteral("                    ");
 
             
-            #line 14 "..\..\Views\Configuration.cshtml"
+            #line 10 "..\..\Views\Configuration.cshtml"
+               Write(Html.DisplayNameFor(m => m.SmtpServerAddress));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                </th>\r\n                <td>\r\n");
+
+WriteLiteral("                    ");
+
+            
+            #line 13 "..\..\Views\Configuration.cshtml"
                Write(Html.EditorFor(m => m.SmtpServerAddress));
 
             
@@ -69,20 +85,30 @@ WriteLiteral("<br/>\r\n");
 WriteLiteral("                    ");
 
             
-            #line 15 "..\..\Views\Configuration.cshtml"
+            #line 14 "..\..\Views\Configuration.cshtml"
                Write(Html.ValidationMessageFor(m => m.SmtpServerAddress));
 
             
             #line default
             #line hidden
 WriteLiteral("\r\n                </td>\r\n            </tr>\r\n            <tr>\r\n                <th" +
-">\r\n                    SMTP Server Port:\r\n                </th>\r\n               " +
-" <td>\r\n");
+">\r\n");
 
 WriteLiteral("                    ");
 
             
-            #line 23 "..\..\Views\Configuration.cshtml"
+            #line 19 "..\..\Views\Configuration.cshtml"
+               Write(Html.DisplayNameFor(m => m.SmtpServerPort));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                </th>\r\n                <td>\r\n");
+
+WriteLiteral("                    ");
+
+            
+            #line 22 "..\..\Views\Configuration.cshtml"
                Write(Html.EditorFor(m => m.SmtpServerPort));
 
             
@@ -93,33 +119,53 @@ WriteLiteral("<br/>\r\n                    <span>Default is 25</span>\r\n");
 WriteLiteral("                    ");
 
             
-            #line 25 "..\..\Views\Configuration.cshtml"
+            #line 24 "..\..\Views\Configuration.cshtml"
                Write(Html.ValidationMessageFor(m => m.SmtpServerPort));
 
             
             #line default
             #line hidden
 WriteLiteral("\r\n                </td>\r\n            </tr>\r\n            <tr>\r\n                <th" +
-">\r\n                    Enable SSL:\r\n                </th>\r\n                <td>\r" +
-"\n");
+">\r\n");
 
 WriteLiteral("                    ");
 
             
-            #line 33 "..\..\Views\Configuration.cshtml"
+            #line 29 "..\..\Views\Configuration.cshtml"
+               Write(Html.DisplayNameFor(m => m.EnableSsl));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                </th>\r\n                <td>\r\n");
+
+WriteLiteral("                    ");
+
+            
+            #line 32 "..\..\Views\Configuration.cshtml"
                Write(Html.CheckBoxFor(m => m.EnableSsl));
 
             
             #line default
             #line hidden
 WriteLiteral("\r\n                </td>\r\n            </tr>\r\n            <tr>\r\n                <th" +
-">\r\n                    SMTP Sender Address:\r\n                </th>\r\n            " +
-"    <td>\r\n");
+">\r\n");
 
 WriteLiteral("                    ");
 
             
-            #line 41 "..\..\Views\Configuration.cshtml"
+            #line 37 "..\..\Views\Configuration.cshtml"
+               Write(Html.DisplayNameFor(m => m.SmtpSenderAddress));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                </th>\r\n                <td>\r\n");
+
+WriteLiteral("                    ");
+
+            
+            #line 40 "..\..\Views\Configuration.cshtml"
                Write(Html.EditorFor(m => m.SmtpSenderAddress));
 
             
@@ -130,33 +176,53 @@ WriteLiteral("<br/>\r\n");
 WriteLiteral("                    ");
 
             
-            #line 42 "..\..\Views\Configuration.cshtml"
+            #line 41 "..\..\Views\Configuration.cshtml"
                Write(Html.ValidationMessageFor(m => m.SmtpSenderAddress));
 
             
             #line default
             #line hidden
 WriteLiteral("\r\n                </td>\r\n            </tr>\r\n            <tr>\r\n                <th" +
-">\r\n                    Authentication Required:\r\n                </th>\r\n        " +
-"        <td>\r\n");
+">\r\n");
 
 WriteLiteral("                    ");
 
             
-            #line 50 "..\..\Views\Configuration.cshtml"
+            #line 46 "..\..\Views\Configuration.cshtml"
+               Write(Html.DisplayNameFor(m => m.AuthenticationRequried));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                </th>\r\n                <td>\r\n");
+
+WriteLiteral("                    ");
+
+            
+            #line 49 "..\..\Views\Configuration.cshtml"
                Write(Html.CheckBoxFor(m => m.AuthenticationRequried));
 
             
             #line default
             #line hidden
 WriteLiteral("\r\n                </td>\r\n            </tr>\r\n            <tr>\r\n                <th" +
-">\r\n                    SMTP Username:\r\n                </th>\r\n                <t" +
-"d>\r\n");
+">\r\n");
 
 WriteLiteral("                    ");
 
             
-            #line 58 "..\..\Views\Configuration.cshtml"
+            #line 54 "..\..\Views\Configuration.cshtml"
+               Write(Html.DisplayNameFor(m => m.SmtpUsername));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                </th>\r\n                <td>\r\n");
+
+WriteLiteral("                    ");
+
+            
+            #line 57 "..\..\Views\Configuration.cshtml"
                Write(Html.EditorFor(m => m.SmtpUsername));
 
             
@@ -167,20 +233,30 @@ WriteLiteral("<br />\r\n");
 WriteLiteral("                    ");
 
             
-            #line 59 "..\..\Views\Configuration.cshtml"
+            #line 58 "..\..\Views\Configuration.cshtml"
                Write(Html.ValidationMessageFor(m => m.SmtpUsername));
 
             
             #line default
             #line hidden
 WriteLiteral("\r\n                </td>\r\n            </tr>\r\n            <tr>\r\n                <th" +
-">\r\n                    SMTP Password:\r\n                </th>\r\n                <t" +
-"d>\r\n");
+">\r\n");
 
 WriteLiteral("                    ");
 
             
-            #line 67 "..\..\Views\Configuration.cshtml"
+            #line 63 "..\..\Views\Configuration.cshtml"
+               Write(Html.DisplayNameFor(m => m.SmtpPassword));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                </th>\r\n                <td>\r\n");
+
+WriteLiteral("                    ");
+
+            
+            #line 66 "..\..\Views\Configuration.cshtml"
                Write(Html.EditorFor(m => m.SmtpPassword));
 
             
@@ -191,49 +267,160 @@ WriteLiteral("<br />\r\n");
 WriteLiteral("                    ");
 
             
-            #line 68 "..\..\Views\Configuration.cshtml"
+            #line 67 "..\..\Views\Configuration.cshtml"
                Write(Html.ValidationMessageFor(m => m.SmtpPassword));
 
             
             #line default
             #line hidden
-WriteLiteral(@"
-                </td>
-            </tr>
-        </table>
-        <hr />
-        <h2>
-            Email Alert Configuration
-        </h2>
-        <table>
-            <tr>
-                <th>
-                    Send emails when device is ready for collection:
-                </th>
-                <td>
-");
-
-WriteLiteral("                    ");
+WriteLiteral("\r\n                </td>\r\n            </tr>\r\n        </table>\r\n        <hr/>\r\n    " +
+"    <h2>Email Alert Configurations</h2>\r\n        <table>\r\n");
 
             
-            #line 82 "..\..\Views\Configuration.cshtml"
-               Write(Html.CheckBoxFor(m => m.DeviceReadyAlert));
+            #line 74 "..\..\Views\Configuration.cshtml"
+            
+            
+            #line default
+            #line hidden
+            
+            #line 74 "..\..\Views\Configuration.cshtml"
+             for (var i = 0; i < Model.MessageConfig.Count; i++)
+            {
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                </td>\r\n            </tr>\r\n        </table>\r\n    </div>\r\n</div>\r" +
-"\n<script>\r\n    $(document).ready(function ()\r\n    {\r\n        $(\'<a>\').attr(\'href" +
-"\', \'");
+WriteLiteral("                <tr>\r\n                    <th>");
 
             
-            #line 91 "..\..\Views\Configuration.cshtml"
-                          Write(Plugin.ActionUrl("TestEmailConfiguration"));
+            #line 77 "..\..\Views\Configuration.cshtml"
+                   Write(Html.DisplayNameFor(m => Model.MessageConfig[i].EmailMessageType));
 
             
             #line default
             #line hidden
-WriteLiteral(@"').addClass('button').text('Send Test Email').prependTo('.actionBar');
+WriteLiteral(": ");
+
+            
+            #line 77 "..\..\Views\Configuration.cshtml"
+                                                                                       Write(Model.MessageConfig[i].EmailMessageType.GetDisplayName());
+
+            
+            #line default
+            #line hidden
+WriteLiteral(" ");
+
+            
+            #line 77 "..\..\Views\Configuration.cshtml"
+                                                                                                                                                 Write(Html.HiddenFor(m => m.MessageConfig[i].EmailMessageType));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</th>\r\n                    <td>\r\n");
+
+WriteLiteral("                        ");
+
+            
+            #line 79 "..\..\Views\Configuration.cshtml"
+                   Write(Html.DisplayNameFor(m => Model.MessageConfig[i].EmailSubject));
+
+            
+            #line default
+            #line hidden
+WriteLiteral(": ");
+
+            
+            #line 79 "..\..\Views\Configuration.cshtml"
+                                                                                   Write(Html.EditorFor(m => Model.MessageConfig[i].EmailSubject, new { @class = "resizer" }));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("<br />\r\n");
+
+WriteLiteral("                        ");
+
+            
+            #line 80 "..\..\Views\Configuration.cshtml"
+                   Write(Html.DisplayNameFor(m => Model.MessageConfig[i].EmailBody));
+
+            
+            #line default
+            #line hidden
+WriteLiteral(": ");
+
+            
+            #line 80 "..\..\Views\Configuration.cshtml"
+                                                                                Write(Html.EditorFor(m => Model.MessageConfig[i].EmailBody, new { @class = "resizer" }));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("<br/>\r\n");
+
+            
+            #line 81 "..\..\Views\Configuration.cshtml"
+                        
+            
+            #line default
+            #line hidden
+            
+            #line 81 "..\..\Views\Configuration.cshtml"
+                         if (Model.MessageConfig[i].EmailMessageType != MessageType.PluginTestEmail)
+                        {
+                            
+            
+            #line default
+            #line hidden
+            
+            #line 83 "..\..\Views\Configuration.cshtml"
+                       Write(Html.DisplayNameFor(m => Model.MessageConfig[i].EmailAlertEnabled));
+
+            
+            #line default
+            #line hidden
+WriteLiteral(":");
+
+WriteLiteral(" ");
+
+            
+            #line 83 "..\..\Views\Configuration.cshtml"
+                                                                                                              
+            
+            #line default
+            #line hidden
+            
+            #line 83 "..\..\Views\Configuration.cshtml"
+                                                                                                         Write(Html.CheckBoxFor(m => Model.MessageConfig[i].EmailAlertEnabled));
+
+            
+            #line default
+            #line hidden
+            
+            #line 83 "..\..\Views\Configuration.cshtml"
+                                                                                                                                                                              
+                        }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                    </td>\r\n                </tr>\r\n");
+
+            
+            #line 87 "..\..\Views\Configuration.cshtml"
+            }
+
+            
+            #line default
+            #line hidden
+WriteLiteral(@"        </table>
+    </div>
+</div>
+<script>
+    $(document).ready(function ()
+    {
+        $('[value=""Save Configuration""]').val('Save & Test Configuration');
 
         if ($('#AuthenticationRequried').not(':checked'))
         {
@@ -242,13 +429,13 @@ WriteLiteral(@"').addClass('button').text('Send Test Email').prependTo('.actionB
             $('#SmtpUsername').prop(""disabled"", !$(this).is(':checked'));
             $('#SmtpPassword').prop(""disabled"", !$(this).is(':checked'));
         }
-    });
 
-    $('#AuthenticationRequried').change(function() {
-        $('#SmtpUsername').val("""");
-        $('#SmtpPassword').val("""");
-        $('#SmtpUsername').prop(""disabled"", !$(this).is(':checked'));
-        $('#SmtpPassword').prop(""disabled"", !$(this).is(':checked'));
+        $('#AuthenticationRequried').change(function () {
+            $('#SmtpUsername').val("""");
+            $('#SmtpPassword').val("""");
+            $('#SmtpUsername').prop(""disabled"", !$(this).is(':checked'));
+            $('#SmtpPassword').prop(""disabled"", !$(this).is(':checked'));
+        });
     });
 </script>");
 

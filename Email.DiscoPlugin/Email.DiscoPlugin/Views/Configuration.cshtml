@@ -1,14 +1,13 @@
-﻿@model Email.DiscoPlugin.Models.ConfigurationModel
+﻿@using Email.DiscoPlugin.Models
+@model ConfigurationModel
 
 <div class="clearfix" style="width: 750px; margin: 0 auto 0 auto;">
     <div class="form" style="float: left">
-        <h2>
-            Email Server Configuration
-        </h2>
+        <h2>Email Server Configuration</h2>
         <table>
             <tr>
                 <th>
-                    SMTP Server Address:
+                    @Html.DisplayNameFor(m => m.SmtpServerAddress)
                 </th>
                 <td>
                     @Html.EditorFor(m => m.SmtpServerAddress)<br/>
@@ -17,7 +16,7 @@
             </tr>
             <tr>
                 <th>
-                    SMTP Server Port:
+                    @Html.DisplayNameFor(m => m.SmtpServerPort)
                 </th>
                 <td>
                     @Html.EditorFor(m => m.SmtpServerPort)<br/>
@@ -27,7 +26,7 @@
             </tr>
             <tr>
                 <th>
-                    Enable SSL:
+                    @Html.DisplayNameFor(m => m.EnableSsl)
                 </th>
                 <td>
                     @Html.CheckBoxFor(m => m.EnableSsl)
@@ -35,7 +34,7 @@
             </tr>
             <tr>
                 <th>
-                    SMTP Sender Address:
+                    @Html.DisplayNameFor(m => m.SmtpSenderAddress)
                 </th>
                 <td>
                     @Html.EditorFor(m => m.SmtpSenderAddress)<br/>
@@ -44,7 +43,7 @@
             </tr>
             <tr>
                 <th>
-                    Authentication Required:
+                    @Html.DisplayNameFor(m => m.AuthenticationRequried)
                 </th>
                 <td>
                     @Html.CheckBoxFor(m => m.AuthenticationRequried)
@@ -52,7 +51,7 @@
             </tr>
             <tr>
                 <th>
-                    SMTP Username:
+                    @Html.DisplayNameFor(m => m.SmtpUsername)
                 </th>
                 <td>
                     @Html.EditorFor(m => m.SmtpUsername)<br />
@@ -61,7 +60,7 @@
             </tr>
             <tr>
                 <th>
-                    SMTP Password:
+                    @Html.DisplayNameFor(m => m.SmtpPassword)
                 </th>
                 <td>
                     @Html.EditorFor(m => m.SmtpPassword)<br />
@@ -69,26 +68,30 @@
                 </td>
             </tr>
         </table>
-        <hr />
-        <h2>
-            Email Alert Configuration
-        </h2>
+        <hr/>
+        <h2>Email Alert Configurations</h2>
         <table>
-            <tr>
-                <th>
-                    Send emails when device is ready for collection:
-                </th>
-                <td>
-                    @Html.CheckBoxFor(m => m.DeviceReadyAlert)
-                </td>
-            </tr>
+            @for (var i = 0; i < Model.MessageConfig.Count; i++)
+            {
+                <tr>
+                    <th>@Html.DisplayNameFor(m => Model.MessageConfig[i].EmailMessageType): @Model.MessageConfig[i].EmailMessageType.GetDisplayName() @Html.HiddenFor(m => m.MessageConfig[i].EmailMessageType)</th>
+                    <td>
+                        @Html.DisplayNameFor(m => Model.MessageConfig[i].EmailSubject): @Html.EditorFor(m => Model.MessageConfig[i].EmailSubject, new { @class = "resizer" })<br />
+                        @Html.DisplayNameFor(m => Model.MessageConfig[i].EmailBody): @Html.EditorFor(m => Model.MessageConfig[i].EmailBody, new { @class = "resizer" })<br/>
+                        @if (Model.MessageConfig[i].EmailMessageType != MessageType.PluginTestEmail)
+                        {
+                            @Html.DisplayNameFor(m => Model.MessageConfig[i].EmailAlertEnabled)<text>:</text> @Html.CheckBoxFor(m => Model.MessageConfig[i].EmailAlertEnabled)
+                        }
+                    </td>
+                </tr>
+            }
         </table>
     </div>
 </div>
 <script>
     $(document).ready(function ()
     {
-        $('<a>').attr('href', '@Plugin.ActionUrl("TestEmailConfiguration")').addClass('button').text('Send Test Email').prependTo('.actionBar');
+        $('[value="Save Configuration"]').val('Save & Test Configuration');
 
         if ($('#AuthenticationRequried').not(':checked'))
         {
@@ -97,12 +100,12 @@
             $('#SmtpUsername').prop("disabled", !$(this).is(':checked'));
             $('#SmtpPassword').prop("disabled", !$(this).is(':checked'));
         }
-    });
 
-    $('#AuthenticationRequried').change(function() {
-        $('#SmtpUsername').val("");
-        $('#SmtpPassword').val("");
-        $('#SmtpUsername').prop("disabled", !$(this).is(':checked'));
-        $('#SmtpPassword').prop("disabled", !$(this).is(':checked'));
+        $('#AuthenticationRequried').change(function () {
+            $('#SmtpUsername').val("");
+            $('#SmtpPassword').val("");
+            $('#SmtpUsername').prop("disabled", !$(this).is(':checked'));
+            $('#SmtpPassword').prop("disabled", !$(this).is(':checked'));
+        });
     });
 </script>
